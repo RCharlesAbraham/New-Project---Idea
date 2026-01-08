@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Start Guide - Yireh Trading CMS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #0066cc;
+            margin-bottom: 1rem;
+            font-size: 2.5rem;
+            text-align: center;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+
+        .section {
+            margin-bottom: 2.5rem;
+        }
+
+        h2 {
+            color: #0066cc;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 0.5rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid #0066cc;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .credentials {
+            background: #e7f3ff;
+            border: 2px solid #0066cc;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .credentials h3 {
+            color: #0066cc;
+            margin-bottom: 1rem;
+        }
+
+        .cred-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 0.5rem 0;
+            font-size: 1.1rem;
+        }
+
+        .cred-item strong {
+            color: #0066cc;
+            min-width: 100px;
+        }
+
+        .cred-item code {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            border: 1px solid #0066cc;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .btn {
+            display: block;
+            padding: 1rem 1.5rem;
+            background: linear-gradient(135deg, #0066cc, #00a8ff);
+            color: white;
+            text-decoration: none;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 102, 204, 0.4);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #6c757d, #495057);
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .btn.secondary:hover {
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.4);
+        }
+
+        .steps {
+            counter-reset: step-counter;
+            list-style: none;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #0066cc, #00a8ff);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .warning h4 {
+            color: #856404;
+            margin-bottom: 0.5rem;
+        }
+
+        .warning p {
+            color: #856404;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 4px solid #28a745;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .success h4 {
+            color: #155724;
+            margin-bottom: 0.5rem;
+        }
+
+        .success p {
+            color: #155724;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            .container {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .feature-grid,
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🚀 Quick Start Guide</h1>
+        <p class="subtitle">Welcome to Yireh Trading Content Management System</p>
+
+        <div class="section">
+            <h2>🔐 Login Credentials</h2>
+            <div class="credentials">
+                <h3>Default Admin Access</h3>
+                <div class="cred-item">
+                    <strong>Username:</strong>
+                    <code>admin</code>
+                </div>
+                <div class="cred-item">
+                    <strong>Password:</strong>
+                    <code>admin123</code>
+                </div>
+            </div>
+            <div class="warning">
+                <h4>⚠️ Security Note</h4>
+                <p>These are default credentials. For production use, change them in the auth.js file.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📋 Quick Start Steps</h2>
+            <ol class="steps">
+                <li>
+                    <strong>Login to Admin Panel</strong><br>
+                    Click the "Admin Login" button below to access the admin panel. Use the default credentials shown
+                    above.
+                </li>
+                <li>
+                    <strong>Explore the Dashboard</strong><br>
+                    Familiarize yourself with the sidebar navigation. Each section manages different parts of your
+                    website.
+                </li>
+                <li>
+                    <strong>Edit Content</strong><br>
+                    Click on any section (Hero, About, Functions, etc.) and start editing. Changes are saved locally in
+                    your browser.
+                </li>
+                <li>
+                    <strong>Upload Images</strong><br>
+                    Go to "Images & Logos" section to upload your company logos and hero images. Supports JPG, PNG, GIF
+                    (max 5MB).
+                </li>
+                <li>
+                    <strong>Save Your Changes</strong><br>
+                    Click the "Save" button after editing each section, or use "Save All Changes" in the header.
+                </li>
+                <li>
+                    <strong>Preview Your Website</strong><br>
+                    Click "Preview Site" to see your changes on the main website in a new tab.
+                </li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>✨ Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <h3>📝 Full Content Control</h3>
+                    <p>Edit all text, titles, descriptions, and sections without touching code.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🖼️ Image Management</h3>
+                    <p>Upload logos, hero images with preview and easy removal.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>📱 Fully Responsive</h3>
+                    <p>Works perfectly on desktop, tablet, and mobile devices.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>💾 Auto-Save</h3>
+                    <p>All changes saved instantly to browser localStorage.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔒 Secure Login</h3>
+                    <p>Session-based authentication with remember me option.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🎨 Modern Design</h3>
+                    <p>Clean, minimal interface with smooth animations.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Access Links</h2>
+            <div class="quick-links">
+                <a href="login.html" class="btn">🔐 Admin Login</a>
+                <a href="index.html" class="btn secondary">🌐 View Website</a>
+                <a href="README_ADMIN.md" class="btn secondary" target="_blank">📖 Full Documentation</a>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>💡 What You Can Edit</h2>
+            <div class="success">
+                <h4>✅ Everything on the website!</h4>
+                <p>
+                    • Hero section (name, tagline, buttons)<br>
+                    • Statistics (numbers and labels)<br>
+                    • About & profile sections<br>
+                    • Core functions (add/remove cards)<br>
+                    • Sectors & solutions<br>
+                    • Value propositions<br>
+                    • Work principles<br>
+                    • Contact information<br>
+                    • All images and logos
+                </p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🆘 Need Help?</h2>
+            <p style="margin-bottom: 1rem;">If you encounter any issues:</p>
+            <ul style="padding-left: 2rem; color: #666;">
+                <li>Check the README_ADMIN.md file for detailed documentation</li>
+                <li>Use the "Reset to Default" button if content gets messed up</li>
+                <li>Clear browser cache if changes don't appear</li>
+                <li>Try a different browser if experiencing issues</li>
+            </ul>
+        </div>
+
+        <div class="warning">
+            <h4>💾 Important Note</h4>
+            <p>All content is stored in your browser's localStorage. To move content to another computer, you'll need to
+                export/import the data, or set up a backend database for production use.</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem; padding-top: 2rem; border-top: 2px solid #e1e4e8;">
+            <p style="color: #666;">Yireh Trading CMS v1.0 | Built with ❤️ by GitHub Copilot</p>
+        </div>
+    </div>
+</body>
+
+</html>
