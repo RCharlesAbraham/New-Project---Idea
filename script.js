@@ -1,4 +1,5 @@
-// Three.js Scene Setup
+// Three.js Scene Setup - DISABLED
+/* 
 class ThreeJSBackground {
     constructor() {
         this.scene = new THREE.Scene();
@@ -187,13 +188,14 @@ class ThreeJSBackground {
         });
     }
 }
+*/
 
 // Smooth Scrolling for Navigation
 class SmoothScroll {
     constructor() {
         this.init();
     }
-    
+
     init() {
         const navLinks = document.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
@@ -201,7 +203,7 @@ class SmoothScroll {
                 e.preventDefault();
                 const targetId = link.getAttribute('href');
                 const targetElement = document.querySelector(targetId);
-                
+
                 if (targetElement) {
                     const offsetTop = targetElement.offsetTop - 80;
                     window.scrollTo({
@@ -223,7 +225,7 @@ class ScrollAnimations {
         };
         this.init();
     }
-    
+
     init() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -232,12 +234,12 @@ class ScrollAnimations {
                 }
             });
         }, this.observerOptions);
-        
+
         // Observe all sections and cards
         const elementsToAnimate = document.querySelectorAll(
             '.function-card, .sector-card, .value-item, .principle, .contact-card, .location-coverage'
         );
-        
+
         elementsToAnimate.forEach(el => {
             observer.observe(el);
         });
@@ -251,14 +253,14 @@ class MobileNav {
         this.navMenu = document.querySelector('.nav-menu');
         this.init();
     }
-    
+
     init() {
         if (this.navToggle && this.navMenu) {
             this.navToggle.addEventListener('click', () => {
                 this.navMenu.classList.toggle('active');
                 this.navToggle.classList.toggle('active');
             });
-            
+
             // Close menu when clicking on a link
             const navLinks = document.querySelectorAll('.nav-link');
             navLinks.forEach(link => {
@@ -277,11 +279,11 @@ class NavbarScroll {
         this.navbar = document.querySelector('.navbar');
         this.init();
     }
-    
+
     init() {
         window.addEventListener('scroll', () => {
             const scrollTop = window.pageYOffset;
-            
+
             if (scrollTop > 100) {
                 this.navbar.classList.add('scrolled');
             } else {
@@ -296,32 +298,32 @@ class MagneticHover {
     constructor() {
         this.init();
     }
-    
+
     init() {
         const magneticElements = document.querySelectorAll('.function-card, .sector-card, .cta-primary, .cta-secondary, .stat-item');
-        
+
         magneticElements.forEach(element => {
             element.addEventListener('mousemove', (e) => {
                 this.handleMagneticEffect(e, element);
             });
-            
+
             element.addEventListener('mouseleave', () => {
                 this.resetElement(element);
             });
         });
     }
-    
+
     handleMagneticEffect(e, element) {
         const rect = element.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;
         const deltaX = (e.clientX - centerX) * 0.15;
         const deltaY = (e.clientY - centerY) * 0.15;
-        
+
         element.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(1.02)`;
         element.style.transition = 'transform 0.1s ease-out';
     }
-    
+
     resetElement(element) {
         element.style.transform = '';
         element.style.transition = 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
@@ -338,7 +340,7 @@ class CursorFollower {
         this.cursorY = 0;
         this.init();
     }
-    
+
     createCursor() {
         const cursor = document.createElement('div');
         cursor.className = 'custom-cursor';
@@ -347,7 +349,7 @@ class CursorFollower {
             <div class="cursor-ring"></div>
         `;
         document.body.appendChild(cursor);
-        
+
         const style = document.createElement('style');
         style.textContent = `
             .custom-cursor {
@@ -393,40 +395,40 @@ class CursorFollower {
             }
         `;
         document.head.appendChild(style);
-        
+
         return cursor;
     }
-    
+
     init() {
         document.body.classList.add('hide-cursor');
-        
+
         document.addEventListener('mousemove', (e) => {
             this.mouseX = e.clientX;
             this.mouseY = e.clientY;
         });
-        
+
         // Hover effects for interactive elements
         const hoverElements = document.querySelectorAll('a, button, .function-card, .sector-card, .value-item, .nav-link');
         hoverElements.forEach(element => {
             element.addEventListener('mouseenter', () => {
                 this.cursor.classList.add('cursor-hover');
             });
-            
+
             element.addEventListener('mouseleave', () => {
                 this.cursor.classList.remove('cursor-hover');
             });
         });
-        
+
         this.animate();
     }
-    
+
     animate() {
         this.cursorX += (this.mouseX - this.cursorX) * 0.15;
         this.cursorY += (this.mouseY - this.cursorY) * 0.15;
-        
+
         this.cursor.style.left = this.cursorX + 'px';
         this.cursor.style.top = this.cursorY + 'px';
-        
+
         requestAnimationFrame(() => this.animate());
     }
 }
@@ -437,10 +439,10 @@ class AdvancedParallax {
         this.elements = [];
         this.init();
     }
-    
+
     init() {
         const parallaxElements = document.querySelectorAll('.function-card, .sector-card, .hero-content');
-        
+
         parallaxElements.forEach((element, index) => {
             this.elements.push({
                 element,
@@ -448,13 +450,13 @@ class AdvancedParallax {
                 yPos: 0
             });
         });
-        
+
         window.addEventListener('scroll', () => this.updateParallax());
     }
-    
+
     updateParallax() {
         const scrollTop = window.pageYOffset;
-        
+
         this.elements.forEach(item => {
             const yPos = -(scrollTop * item.speed);
             item.element.style.transform = `translateY(${yPos}px)`;
@@ -462,12 +464,13 @@ class AdvancedParallax {
     }
 }
 
-// Text Reveal Animation
+// Text Reveal Animation - DISABLED
+/*
 class TextReveal {
     constructor() {
         this.init();
     }
-    
+
     init() {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
@@ -476,17 +479,17 @@ class TextReveal {
                 }
             });
         });
-        
+
         const textElements = document.querySelectorAll('h1, h2, h3, p');
         textElements.forEach(el => {
             observer.observe(el);
         });
     }
-    
+
     revealText(element) {
         const text = element.textContent;
         element.innerHTML = '';
-        
+
         [...text].forEach((char, index) => {
             const span = document.createElement('span');
             span.textContent = char === ' ' ? '\u00A0' : char;
@@ -494,7 +497,7 @@ class TextReveal {
             span.classList.add('char-reveal');
             element.appendChild(span);
         });
-        
+
         const style = document.createElement('style');
         if (!document.querySelector('#char-reveal-style')) {
             style.id = 'char-reveal-style';
@@ -516,26 +519,27 @@ class TextReveal {
         }
     }
 }
+*/
 
 // Typing Animation for Hero Text
 class TypingAnimation {
     constructor() {
         this.init();
     }
-    
+
     init() {
         const heroTagline = document.querySelector('.hero-tagline');
         if (heroTagline) {
             const text = heroTagline.textContent;
             heroTagline.textContent = '';
             heroTagline.style.opacity = '1';
-            
+
             setTimeout(() => {
                 this.typeWriter(heroTagline, text, 0, 50);
             }, 2000);
         }
     }
-    
+
     typeWriter(element, text, i, speed) {
         if (i < text.length) {
             element.textContent += text.charAt(i);
@@ -550,7 +554,7 @@ class StatsCounter {
     constructor() {
         this.init();
     }
-    
+
     init() {
         const statNumbers = document.querySelectorAll('.stat-number');
         const observer = new IntersectionObserver((entries) => {
@@ -560,10 +564,10 @@ class StatsCounter {
                 }
             });
         });
-        
+
         statNumbers.forEach(stat => observer.observe(stat));
     }
-    
+
     animateCounter(element) {
         const target = element.textContent;
         const isPercentage = target.includes('%');
@@ -572,14 +576,14 @@ class StatsCounter {
         const increment = targetNumber / 100;
         const duration = 2000;
         const stepTime = duration / 100;
-        
+
         const timer = setInterval(() => {
             current += increment;
             if (current >= targetNumber) {
                 current = targetNumber;
                 clearInterval(timer);
             }
-            
+
             element.textContent = Math.floor(current) + (isPercentage ? '%' : '+');
         }, stepTime);
     }
@@ -587,15 +591,12 @@ class StatsCounter {
 
 // Initialize all components when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize Three.js background
-    new ThreeJSBackground();
-    
     // Initialize enhanced interactions
     new MagneticHover();
     new CursorFollower();
     new AdvancedParallax();
-    new TextReveal();
-    
+    // TextReveal disabled
+
     // Initialize other components
     new SmoothScroll();
     new ScrollAnimations();
@@ -603,7 +604,7 @@ document.addEventListener('DOMContentLoaded', () => {
     new NavbarScroll();
     new TypingAnimation();
     new StatsCounter();
-    
+
     // Add custom styles for animations
     const style = document.createElement('style');
     style.textContent = `
@@ -699,7 +700,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     `;
     document.head.appendChild(style);
-    
+
     // Add enhanced button click effects
     const buttons = document.querySelectorAll('.cta-primary, .cta-secondary, .cta-button');
     buttons.forEach(button => {
@@ -710,20 +711,20 @@ document.addEventListener('DOMContentLoaded', () => {
             const size = Math.max(rect.width, rect.height) * 1.5;
             const x = e.clientX - rect.left - size / 2;
             const y = e.clientY - rect.top - size / 2;
-            
+
             ripple.style.width = ripple.style.height = size + 'px';
             ripple.style.left = x + 'px';
             ripple.style.top = y + 'px';
             ripple.classList.add('ripple-enhanced');
-            
+
             button.appendChild(ripple);
-            
+
             setTimeout(() => {
                 ripple.remove();
             }, 800);
         });
     });
-    
+
     // Add contact form functionality
     const ctaButtons = document.querySelectorAll('.cta-primary, .cta-button');
     ctaButtons.forEach(button => {
@@ -731,11 +732,11 @@ document.addEventListener('DOMContentLoaded', () => {
             // Scroll to contact section with enhanced animation
             const contactSection = document.querySelector('#contact');
             if (contactSection) {
-                contactSection.scrollIntoView({ 
+                contactSection.scrollIntoView({
                     behavior: 'smooth',
                     block: 'center'
                 });
-                
+
                 // Add highlight effect to contact section
                 contactSection.style.animation = 'highlightSection 2s ease-in-out';
                 setTimeout(() => {
@@ -744,7 +745,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-    
+
     // Add loading animation completion
     setTimeout(() => {
         document.body.classList.add('loaded');
@@ -761,7 +762,7 @@ window.addEventListener('load', () => {
         'https://via.placeholder.com/50x50/0066cc/ffffff?text=Y',
         'https://via.placeholder.com/100x100/0066cc/ffffff?text=LOGO'
     ];
-    
+
     images.forEach(src => {
         const img = new Image();
         img.src = src;
