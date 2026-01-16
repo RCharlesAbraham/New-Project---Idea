@@ -52,6 +52,112 @@ body {
     transition: var(--transition);
 }
 
+/* Image Scroll Banner */
+.image-banner {
+    position: relative;
+    width: 100%;
+    margin-top: 80px;
+    overflow: hidden;
+    background: var(--bg-dark);
+}
+
+.banner-container {
+    position: relative;
+    width: 100%;
+    height: 500px;
+}
+
+.banner-images {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.banner-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.8s ease-in-out;
+}
+
+.banner-image.active {
+    opacity: 1;
+}
+
+.banner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.banner-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 102, 204, 0.8);
+    color: white;
+    border: none;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+}
+
+.banner-arrow:hover {
+    background: rgba(0, 102, 204, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.banner-arrow-left {
+    left: 20px;
+}
+
+.banner-arrow-right {
+    right: 20px;
+}
+
+@media (max-width: 768px) {
+    .banner-container {
+        height: 300px;
+    }
+
+    .banner-arrow {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+
+    .banner-arrow-left {
+        left: 10px;
+    }
+
+    .banner-arrow-right {
+        right: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-container {
+        height: 200px;
+    }
+
+    .banner-arrow {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+}
+
 .nav-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -1063,30 +1169,6 @@ body {
         display: inline-block;
     }
 }
-
-/* Logo styling */
-.main-logo-placeholder {
-    /* Static logo - no animation */
-}
-
-.logo-placeholder {
-    /* Static logo - no animation */
-}
-
-/* Hero title styling */
-.name-highlight {
-    background: var(--gradient-primary);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-/* CTA button styling */
-.hero-cta .cta-primary {
-    /* Static button - no animation */
-}
-
-/* Sector card styling */
 
 /* Enhanced scrollbar styling */
 ::-webkit-scrollbar {

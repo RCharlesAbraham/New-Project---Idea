@@ -46,6 +46,7 @@ class ContentLoader {
         this.loadWorkContent();
         this.loadContactContent();
         this.loadImagesContent();
+        this.loadBannerContent();
     }
 
     // ===================================
@@ -351,6 +352,121 @@ class ContentLoader {
                 }
             }
         }
+    }
+
+    // ===================================
+    // BANNER CONTENT
+    // ===================================
+    loadBannerContent() {
+        if (!this.content.banner || !this.content.banner.images || this.content.banner.images.length === 0) {
+            const banner = document.getElementById('imageBanner');
+            if (banner) banner.style.display = 'none';
+            return;
+        }
+
+        const banner = document.getElementById('imageBanner');
+        const bannerImages = document.getElementById('bannerImages');
+        const prevBtn = document.getElementById('bannerPrev');
+        const nextBtn = document.getElementById('bannerNext');
+
+        if (!banner || !bannerImages) return;
+
+        banner.style.display = 'block';
+
+        const images = this.content.banner.images;
+        let currentIndex = 0;
+        let autoScrollInterval = null;
+        let isPaused = false;
+
+        // Render images
+        bannerImages.innerHTML = images.map((img, index) =>
+            `<div class="banner-image ${index === 0 ? 'active' : ''}">
+                <img src="${img}" alt="Banner ${index + 1}">
+            </div>`
+        ).join('');
+
+        const imageElements = bannerImages.querySelectorAll('.banner-image');
+
+        // Show/hide controls based on image count
+        if (images.length === 1) {
+            if (prevBtn) prevBtn.style.display = 'none';
+            if (nextBtn) nextBtn.style.display = 'none';
+            return;
+        }
+
+        if (prevBtn) prevBtn.style.display = 'flex';
+        if (nextBtn) nextBtn.style.display = 'flex';
+
+        // Navigation functions
+        const showImage = (index) => {
+            imageElements.forEach(img => img.classList.remove('active'));
+            imageElements[index].classList.add('active');
+            currentIndex = index;
+        };
+
+        const nextImage = () => {
+            const next = (currentIndex + 1) % images.length;
+            showImage(next);
+        };
+
+        const prevImage = () => {
+            const prev = (currentIndex - 1 + images.length) % images.length;
+            showImage(prev);
+        };
+
+        // Auto scroll
+        const startAutoScroll = () => {
+            if (autoScrollInterval) clearInterval(autoScrollInterval);
+            autoScrollInterval = setInterval(() => {
+                if (!isPaused) {
+                    nextImage();
+                }
+            }, 4000);
+        };
+
+        const stopAutoScroll = () => {
+            if (autoScrollInterval) {
+                clearInterval(autoScrollInterval);
+                autoScrollInterval = null;
+            }
+        };
+
+        // Event listeners
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                prevImage();
+                isPaused = true;
+                stopAutoScroll();
+                setTimeout(() => {
+                    isPaused = false;
+                    startAutoScroll();
+                }, 5000);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                nextImage();
+                isPaused = true;
+                stopAutoScroll();
+                setTimeout(() => {
+                    isPaused = false;
+                    startAutoScroll();
+                }, 5000);
+            });
+        }
+
+        // Pause on hover
+        banner.addEventListener('mouseenter', () => {
+            isPaused = true;
+        });
+
+        banner.addEventListener('mouseleave', () => {
+            isPaused = false;
+        });
+
+        // Start auto scroll
+        startAutoScroll();
     }
 
     // ===================================

@@ -66,6 +66,10 @@
                 <i class="fas fa-chart-bar"></i>
                 <span>Statistics</span>
             </a>
+            <a href="#banner" class="nav-item" data-section="banner">
+                <i class="fas fa-images"></i>
+                <span>Image Scroll Banner</span>
+            </a>
         </nav>
 
         <div class="sidebar-footer">
@@ -453,6 +457,34 @@
 
                 <button class="btn-save" data-save="stats">
                     <i class="fas fa-save"></i> Save Statistics
+                </button>
+            </section>
+
+            <!-- Image Scroll Banner Section -->
+            <section class="content-section" id="bannerSection" style="display: none;">
+                <div class="section-title">
+                    <i class="fas fa-images"></i>
+                    <h2>Image Scroll Banner</h2>
+                    <p>Upload up to 8 images for the auto-scrolling banner (appears below navigation)</p>
+                </div>
+
+                <div class="banner-upload-area">
+                    <div class="upload-box">
+                        <input type="file" id="bannerImageInput" accept="image/*" multiple style="display: none;">
+                        <label for="bannerImageInput" class="upload-label">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <span>Upload Banner Images</span>
+                            <small>Max 8 images | JPG, PNG, GIF | Max 5MB each</small>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="banner-images-grid" id="bannerImagesGrid">
+                    <!-- Banner images will be displayed here -->
+                </div>
+
+                <button class="btn-save" data-save="banner">
+                    <i class="fas fa-save"></i> Save Banner
                 </button>
             </section>
 

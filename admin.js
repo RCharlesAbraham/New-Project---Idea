@@ -153,6 +153,9 @@ class ContentManager {
                 mainLogo: 'https://via.placeholder.com/100x100/0066cc/ffffff?text=LOGO',
                 navLogo: 'https://via.placeholder.com/50x50/0066cc/ffffff?text=Y'
             },
+            banner: {
+                images: []
+            },
             lastUpdated: null
         };
     }
@@ -299,6 +302,7 @@ class ContentManager {
         this.loadWorkSection();
         this.loadContactSection();
         this.loadImagesSection();
+        this.loadBannerSection();
     }
 
     loadHeroSection() {
@@ -544,6 +548,9 @@ class ContentManager {
             case 'images':
                 this.saveContent();
                 break;
+            case 'banner':
+                this.saveBannerSection();
+                break;
         }
     }
 
@@ -736,6 +743,14 @@ class ContentManager {
             });
         }
 
+        // Banner images upload
+        const bannerImageInput = document.getElementById('bannerImageInput');
+        if (bannerImageInput) {
+            bannerImageInput.addEventListener('change', (e) => {
+                this.handleBannerImageUpload(e.target.files);
+            });
+        }
+
         // Remove image handlers
         document.addEventListener('click', (e) => {
             if (e.target.closest('.remove-image')) {
@@ -785,6 +800,117 @@ class ContentManager {
         }
 
         this.loadImagesSection();
+        this.saveContent();
+    }
+
+    // ===================================
+    // BANNER IMAGE HANDLERS
+    // ===================================
+    handleBannerImageUpload(files) {
+        if (!files || files.length === 0) return;
+
+        if (!this.currentContent.banner) {
+            this.currentContent.banner = { images: [] };
+        }
+
+        const currentCount = this.currentContent.banner.images.length;
+        const maxImages = 8;
+        const availableSlots = maxImages - currentCount;
+
+        if (availableSlots <= 0) {
+            this.showToast('Maximum 8 images allowed!', 'error');
+            return;
+        }
+
+        const filesToUpload = Array.from(files).slice(0, availableSlots);
+
+        filesToUpload.forEach(file => {
+            if (file.size > 5 * 1024 * 1024) {
+                this.showToast('File too large! Max 5MB per image', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                this.currentContent.banner.images.push(e.target.result);
+                this.loadBannerSection();
+
+                if (this.currentContent.banner.images.length >= maxImages) {
+                    this.showToast('Maximum 8 images reached', 'warning');
+                }
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+
+    loadBannerSection() {
+        if (!this.currentContent.banner) {
+            this.currentContent.banner = { images: [] };
+        }
+
+        const grid = document.getElementById('bannerImagesGrid');
+        if (!grid) return;
+
+        grid.innerHTML = '';
+
+        this.currentContent.banner.images.forEach((img, index) => {
+            const div = document.createElement('div');
+            div.className = 'banner-image-item';
+            div.innerHTML = `
+                <img src="${img}" alt="Banner ${index + 1}">
+                <div class="banner-image-controls">
+                    <button class="btn-icon" data-action="up" data-index="${index}" ${index === 0 ? 'disabled' : ''}>
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                    <button class="btn-icon" data-action="down" data-index="${index}" ${index === this.currentContent.banner.images.length - 1 ? 'disabled' : ''}>
+                        <i class="fas fa-arrow-down"></i>
+                    </button>
+                    <button class="btn-icon btn-danger" data-action="remove" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="banner-image-number">${index + 1}</div>
+            `;
+            grid.appendChild(div);
+        });
+
+        // Attach event listeners
+        grid.querySelectorAll('[data-action]').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const action = btn.dataset.action;
+                const index = parseInt(btn.dataset.index);
+
+                if (action === 'up') {
+                    this.moveBannerImage(index, -1);
+                } else if (action === 'down') {
+                    this.moveBannerImage(index, 1);
+                } else if (action === 'remove') {
+                    this.removeBannerImage(index);
+                }
+            });
+        });
+    }
+
+    moveBannerImage(index, direction) {
+        const newIndex = index + direction;
+        if (newIndex < 0 || newIndex >= this.currentContent.banner.images.length) return;
+
+        const temp = this.currentContent.banner.images[index];
+        this.currentContent.banner.images[index] = this.currentContent.banner.images[newIndex];
+        this.currentContent.banner.images[newIndex] = temp;
+
+        this.loadBannerSection();
+    }
+
+    removeBannerImage(index) {
+        if (confirm('Remove this banner image?')) {
+            this.currentContent.banner.images.splice(index, 1);
+            this.loadBannerSection();
+        }
+    }
+
+    saveBannerSection() {
         this.saveContent();
     }
 
